@@ -3,6 +3,7 @@
 const moment = require('moment');
 const http = require('http');
 const fs = require('fs');
+const nodemailer = require('nodemailer'); 
 
 // Define constants
 
@@ -96,6 +97,38 @@ const server = http.createServer( (request, response) => {
             response.write(data);
             response.end();
         });
+    }
+
+    else if (request.url === "/correo"){
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'myemail@gmail.com',
+              pass: 'mypass'
+            }
+          });
+          
+          var mailOptions = {
+            from: 'js3mail@gmail.com',
+            to: 'davidcarvajalg@gmail.com',
+            subject: 'Sending Email using Node.js',
+            text: 'Un saludo, Eloy'
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+                // http headers
+                response.writeHead(200, {'Content-Type':'text/plain'});
+                // http body
+        
+                response.write("mensaje enviado");
+                // send http message
+                response.end();
+            }
+          });
     }
     /*
     Si se hace una petición a algún sitio que no sea ninguno de los anteriores...
