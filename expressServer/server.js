@@ -1,6 +1,7 @@
 // ----- Import libraries -----
 
 const express = require('express');
+const nodemailer = require('nodemailer'); 
 
 // ----- Define constants -----
 //    (Configuración inicial)
@@ -18,6 +19,10 @@ server.use(express.json());
 
 // Endpoints
 
+server.get('/', (req, res) => {
+    res.send("<h1>Un mensaje de texto</h1>");
+});
+
 server.get('/myjson', (req, res) => {
 
     // JSON response
@@ -32,6 +37,32 @@ server.get('/myjson', (req, res) => {
     }
 
     res.send(respuesta);
+});
+
+server.get('correo', (req, res)=>{
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'myemail@gmail.com',
+          pass: 'mypass'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'js3mail@gmail.com',
+        to: 'davidcarvajalg@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'Un saludo, Eloy'
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send("Correo enviado con exito");
+        }
+      });
 });
 
 server.use((req, res) => res.status(404).send('Estos no son los androides que buscas'));
