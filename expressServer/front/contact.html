@@ -9,8 +9,17 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-   <form action="">
-       nombre <input type="text">
-   </form>
+    <form method="post" action="/signup">
+        Nombre: <input type="text" name="firstname"><br />
+        Email: <input type="email" name="email"><br />
+        País:
+        <select name="country">
+            <option value="es">España</option>
+            <option value="uk">Reino Unido</option>
+            <option value="jp">Japón</option>
+        </select>
+        
+        <button type="submit">Enviar nombre</button>
+    </form>
 </body>
 </html>
