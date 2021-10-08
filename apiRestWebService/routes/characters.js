@@ -108,15 +108,6 @@ router.post('/new', (request, response) => {
 
 });
 
-/* Por alguna razon, updateOne no funciona. No actualiza, aunque la respuesta de mongo es
-{
-    "acknowledged": true,
-    "modifiedCount": 0,
-    "upsertedId": null,
-    "upsertedCount": 0,
-    "matchedCount": 0
-}
-*/
 router.put('/update/:id', (request, response) => {
     const datos = request.body;
     const charId = request.params.id;
@@ -126,11 +117,9 @@ router.put('/update/:id', (request, response) => {
 
             try {
                 const newValues = {$set: {name: datos.name, role: datos.role}};
-                //console.log(charId);
-                //console.log(newValues);
                 dbo
                     .collection("characters")
-                    .updateOne({_id: charId}, newValues,  (error2, result) => {
+                    .updateOne({_id: parseInt(charId)}, newValues,  (error2, result) => {
                         response.send(result);
                         database.close();
                     });
@@ -146,12 +135,6 @@ router.put('/update/:id', (request, response) => {
     }
 });
 
-/*Tampoco funciona deleteOne. No borra, aunque la respuesta de mongo es:
-{
-    "acknowledged": true,
-    "deletedCount": 0
-}
-*/
 router.delete('/delete/:id', (request, response) => {
     const id = request.params.id;
     try {
@@ -162,7 +145,7 @@ router.delete('/delete/:id', (request, response) => {
             
                 dbo
                     .collection("characters")
-                    .deleteOne({_id: id}, (error2, result) => {
+                    .deleteOne({_id: parseInt(id)}, (error2, result) => {
                         response.send(result);
                         database.close();
                     });
