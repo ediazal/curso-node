@@ -10,7 +10,7 @@ const urlDatabase = process.env.MONGODB;
 router.get('/', (request, response) => {
     try {
         MongoClient.connect(urlDatabase, (error, database) => {
-            const dbo = database.db("db-node"); // use halloweendb
+            const dbo = database.db("db-node"); 
 
             try {
                 dbo
