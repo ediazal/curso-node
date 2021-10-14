@@ -1,0 +1,16 @@
+npm init
+npm init -y
+
+npm install <package-name>
+npm update <package-name>
+
+npm install -g nodemon
+
+npm install
+
+npm run dev
+npm run start
+npm run seeds
+
+ lsof -i tcp:8080  seguido de kill -9 PID
+
